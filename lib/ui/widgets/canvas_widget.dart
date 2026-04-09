@@ -31,12 +31,13 @@ class CanvasWidget extends ConsumerWidget {
     if (model.type == WidgetType.scaffold) return rendered;
 
     return GestureDetector(
-      onTap: () {
-        ref.read(selectionProvider.notifier).selectWidget(model.id);
-      },
+      behavior: HitTestBehavior.opaque,
+      onTap: () => ref.read(selectionProvider.notifier).selectWidget(model.id),
       child: Stack(
         children: [
-          rendered,
+          // AbsorbPointer bloqueia interações dos widgets filhos no modo edição,
+          // impedindo que botões, textfields, etc. respondam a toques.
+          AbsorbPointer(child: rendered),
           if (isSelected)
             Positioned.fill(
               child: IgnorePointer(

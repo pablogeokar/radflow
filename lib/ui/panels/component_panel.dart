@@ -315,16 +315,21 @@ class _LayerNode extends ConsumerWidget {
                   ),
                   if (widget.type != WidgetType.scaffold)
                     GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
+                        // Para a propagação para o GestureDetector pai (seleção)
                         ref
                             .read(projectProvider.notifier)
                             .removeWidget(widgetId);
                         ref.read(selectionProvider.notifier).selectWidget(null);
                       },
-                      child: Icon(
-                        Icons.close,
-                        size: 12,
-                        color: const Color(0xFF6C7086).withAlpha(180),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.close,
+                          size: 12,
+                          color: const Color(0xFF6C7086).withAlpha(180),
+                        ),
                       ),
                     ),
                 ],
